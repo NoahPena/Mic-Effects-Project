@@ -1,0 +1,120 @@
+#include "InputData.h"
+#include "UART.h"
+
+#include <stdio.h>
+
+void InitializeTimer()
+{
+		TIM_TimeBaseInitTypeDef timer;
+	
+		RCC_APB1PeriphClockCmd(RCC_APB1Periph_TIM2, ENABLE);
+	
+		timer.TIM_Prescaler = 0;
+		timer.TIM_CounterMode = TIM_CounterMode_Up;
+		timer.TIM_Period = 951;
+		timer.TIM_ClockDivision = TIM_CKD_DIV1;
+		timer.TIM_RepetitionCounter = 0;
+		TIM_TimeBaseInit(TIM2, &timer);
+		TIM_Cmd(TIM2, ENABLE);
+	
+		TIM_ITConfig(TIM2, TIM_IT_Update, ENABLE);
+}
+
+void EnableTimerInterrupt()
+{
+    NVIC_InitTypeDef nvicStructure;
+    nvicStructure.NVIC_IRQChannel = TIM2_IRQn;
+    nvicStructure.NVIC_IRQChannelPreemptionPriority = 0;
+    nvicStructure.NVIC_IRQChannelSubPriority = 1;
+    nvicStructure.NVIC_IRQChannelCmd = ENABLE;
+    NVIC_Init(&nvicStructure);
+}
+
+void Initialize_ADC(void)
+{
+		ADC_InitTypeDef ADC_InitStruct;
+		GPIO_InitTypeDef GPIO_InitStruct;
+	
+		RCC_APB2PeriphClockCmd(RCC_APB2Periph_ADC1, ENABLE);
+		RCC_AHB1PeriphClockCmd(RCC_AHB1ENR_GPIOCEN, ENABLE);
+	
+		GPIO_StructInit(&GPIO_InitStruct);
+		GPIO_InitStruct.GPIO_Pin = 0x01;
+		GPIO_InitStruct.GPIO_Mode = GPIO_Mode_AN;
+		GPIO_InitStruct.GPIO_PuPd = GPIO_PuPd_NOPULL;
+		GPIO_Init(GPIOC, &GPIO_InitStruct);
+	
+		ADC_DeInit();
+		ADC_InitStruct.ADC_DataAlign = ADC_DataAlign_Right;
+		ADC_InitStruct.ADC_Resolution = ADC_Resolution_12b;
+		ADC_InitStruct.ADC_ContinuousConvMode = ENABLE;
+		ADC_InitStruct.ADC_ExternalTrigConv = ADC_ExternalTrigConv_T1_CC1;
+		ADC_InitStruct.ADC_ExternalTrigConvEdge = ADC_ExternalTrigConvEdge_None;
+		ADC_InitStruct.ADC_NbrOfConversion = 1;
+		ADC_InitStruct.ADC_ScanConvMode = DISABLE;
+		ADC_Init(ADC1, &ADC_InitStruct);
+		
+		ADC_Cmd(ADC1, ENABLE);
+		
+		ADC_RegularChannelConfig(ADC1, ADC_Channel_10, 1, ADC_SampleTime_144Cycles);
+		
+		InitializeTimer();
+		EnableTimerInterrupt();
+		
+}
+
+uint16_t readADC1(uint8_t channel)
+{
+		ADC_SoftwareStartConv(ADC1);
+		while(!ADC_GetFlagStatus(ADC1, ADC_FLAG_EOC));
+		return ADC_GetConversionValue(ADC1);
+}
+
+void TIM2_IRQHandler()
+{
+		float32_t data;
+		char str[10];
+	
+		if(TIM_GetITStatus(TIM2, TIM_IT_Update) != RESET)
+		{
+				TIM_ClearITPendingBit(TIM2, TIM_IT_Update);
+				
+			#ifdef TESTING
+	
+			data = testInput_f32_10khz[fakeCounter];
+			//UART_puts("eh\n");
+			fakeCounter++;
+			fakeCounter++;
+			insertValueFloat(data);
+	
+			if(fakeCounter >= 2048)
+			{
+					fakeCounter = 0;
+			}
+	
+		#else
+			
+			#ifdef ADVTESTING
+			
+			data = sampleData[fakeCounter];
+			fakeCounter++;
+			insertValueFloat(data);
+			
+			if(fakeCounter >= 1024)
+			{
+					fakeCounter = 0;
+			}
+			
+			#else
+	
+			
+			data = (readADC1(10) - 2047.5)/(2047.5);
+			sprintf(str, "%f\n", data);
+			UART_puts(str);
+			insertValue(data);
+			
+			#endif
+	
+		#endif
+		}
+}

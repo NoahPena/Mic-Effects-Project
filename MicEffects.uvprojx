@@ -421,6 +421,26 @@
               <FileType>1</FileType>
               <FilePath>.\main.c</FilePath>
             </File>
+            <File>
+              <FileName>ADC.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>.\ADC.c</FilePath>
+            </File>
+            <File>
+              <FileName>InputData.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>.\InputData.c</FilePath>
+            </File>
+            <File>
+              <FileName>FFT.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>.\FFT.c</FilePath>
+            </File>
+            <File>
+              <FileName>UART.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>.\UART.c</FilePath>
+            </File>
           </Files>
         </Group>
         <Group>
