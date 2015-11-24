@@ -32,12 +32,19 @@ uint32_t getMaxValueIndex(void)
 	
 	arm_max_f32(output, FFT_SIZE, &maxValue, &maxValueIndex);
 	
+//	if(maxValueIndex == 0)
+//	{
+//			output[0] = 0;
+//			arm_max_f32(output, FFT_SIZE, &maxValue, &maxValueIndex);
+//	}
+	
 	return maxValueIndex;
 }
 
 uint32_t getFrequency(void)
 {
 		uint32_t index;
+		uint32_t i = 0;
 		float32_t fs;
 		uint32_t fftSize = FFT_SIZE;
 		uint32_t frequency = 0;
@@ -58,6 +65,16 @@ uint32_t getFrequency(void)
 				sprintf(str, "\t%d\n", frequency);
 				UART_puts(str);
 				UART_puts("\t-----\n");
+				
+				for(;i < 1024; i++)
+				{
+						sprintf(str, "%f", output[i]);
+						UART_puts(str);
+						UART_puts("\n");
+				}
+				
+				while(1);
+				
 				resetTable();
 		}
 	

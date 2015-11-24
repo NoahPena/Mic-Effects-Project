@@ -50,6 +50,8 @@ void insertValue(float32_t data)
 		{
 				NVIC_DisableIRQ(TIM2_IRQn);
 				computeFFT();
+			
+				
 				//resetTable();
 		}
 }

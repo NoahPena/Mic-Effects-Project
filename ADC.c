@@ -58,9 +58,8 @@ void Initialize_ADC(void)
 		
 		ADC_RegularChannelConfig(ADC1, ADC_Channel_10, 1, ADC_SampleTime_144Cycles);
 		
-		InitializeTimer();
-		EnableTimerInterrupt();
 		
+		InitializeTimer();		
 }
 
 uint16_t readADC1(uint8_t channel)
@@ -78,43 +77,11 @@ void TIM2_IRQHandler()
 		if(TIM_GetITStatus(TIM2, TIM_IT_Update) != RESET)
 		{
 				TIM_ClearITPendingBit(TIM2, TIM_IT_Update);
-				
-			#ifdef TESTING
-	
-			data = testInput_f32_10khz[fakeCounter];
-			//UART_puts("eh\n");
-			fakeCounter++;
-			fakeCounter++;
-			insertValueFloat(data);
-	
-			if(fakeCounter >= 2048)
-			{
-					fakeCounter = 0;
-			}
-	
-		#else
 			
-			#ifdef ADVTESTING
-			
-			data = sampleData[fakeCounter];
-			fakeCounter++;
-			insertValueFloat(data);
-			
-			if(fakeCounter >= 1024)
-			{
-					fakeCounter = 0;
-			}
-			
-			#else
-	
-			
-			data = (readADC1(10) - 2047.5)/(2047.5);
-			sprintf(str, "%f\n", data);
-			UART_puts(str);
-			insertValue(data);
-			
-			#endif
-	
-		#endif
+				data = (readADC1(10) - 2047.5)/(2047.5);
+				//data = readADC1(10);
+				sprintf(str, "%f\n", data);
+				UART_puts(str);
+				insertValue(data);
 		}
 }

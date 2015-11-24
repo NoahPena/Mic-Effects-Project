@@ -27,26 +27,4 @@ extern uint32_t divisor;
 
 extern uint32_t currentFrequencyBin;
 
-
-//testing
-
-//#define TESTING
-//#define ADVTESTING
-
-#ifdef ADVTESTING
-
-extern uint32_t fakeCounter;
-
-extern float32_t sampleData[1024];
-
-#endif
-
-#ifdef TESTING
-
-extern uint32_t fakeCounter;
-
-extern float32_t testInput_f32_10khz[2048];
-
-#endif
-
 #endif

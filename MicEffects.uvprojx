@@ -134,7 +134,7 @@
             <RestoreMemoryDisplay>1</RestoreMemoryDisplay>
             <RestoreFunctions>1</RestoreFunctions>
             <RestoreToolbox>1</RestoreToolbox>
-            <LimitSpeedToRealTime>0</LimitSpeedToRealTime>
+            <LimitSpeedToRealTime>1</LimitSpeedToRealTime>
             <RestoreSysVw>1</RestoreSysVw>
           </Simulator>
           <Target>
@@ -445,6 +445,33 @@
         </Group>
         <Group>
           <GroupName>Include</GroupName>
+          <Files>
+            <File>
+              <FileName>ADC.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>.\ADC.h</FilePath>
+            </File>
+            <File>
+              <FileName>FFT.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>.\FFT.h</FilePath>
+            </File>
+            <File>
+              <FileName>InputData.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>.\InputData.h</FilePath>
+            </File>
+            <File>
+              <FileName>main.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>.\main.h</FilePath>
+            </File>
+            <File>
+              <FileName>UART.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>.\UART.h</FilePath>
+            </File>
+          </Files>
         </Group>
         <Group>
           <GroupName>DRIVER_LIB</GroupName>
