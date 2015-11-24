@@ -59,7 +59,7 @@ void Initialize_ADC(void)
 		ADC_RegularChannelConfig(ADC1, ADC_Channel_10, 1, ADC_SampleTime_144Cycles);
 		
 		
-		InitializeTimer();		
+		//InitializeTimer();		
 }
 
 uint16_t readADC1(uint8_t channel)

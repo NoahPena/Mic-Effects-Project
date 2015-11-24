@@ -24,8 +24,8 @@ void InitializeSystem(void)
 		Initialize_ADC();
 		Initialize_UART(9600);
 		GPIOB->ODR |= 0x02;
-		EnableTimerInterrupt();
-		resetTable();
+		//EnableTimerInterrupt();
+		//resetTable();
 }
 
 void SetupDebugLeds(void)
@@ -63,17 +63,19 @@ int main(void)
 	char str[10];
 	char status = 0;
 	
+	uint16_t data = 0;
+	
 	SetupDebugLeds();
 	SetupDebugButtons();
 	
 	
 	//GPIOB->ODR |= 0x02;
 
-	do
-	{
-		status = GPIO_ReadInputDataBit(GPIOB, 0x01);
-		//UART_puts("Start\n");
-	} while(status == 0);
+//	do
+//	{
+//		status = GPIO_ReadInputDataBit(GPIOB, 0x01);
+//		//UART_puts("Start\n");
+//	} while(status == 0);
 
 	
 //	while(!(GPIOB->IDR & 0x01))
@@ -85,6 +87,13 @@ int main(void)
 	UART_puts("Start\n");
 	
 	GPIOB->ODR |= 0x02;
+	
+	while(1)
+	{
+			data = readADC1(10);
+			sprintf(str, "%d\n", data);
+			UART_puts(str);
+	}
 		
 	while(1)
 	{
