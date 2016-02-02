@@ -1,0 +1,17 @@
+.\objects\adc.o: ADC.c
+.\objects\adc.o: ADC.h
+.\objects\adc.o: C:\Keil_v5\ARM\ARMCC\Bin\..\include\stdint.h
+.\objects\adc.o: C:\Keil_v5\ARM\ARMCC\Bin\..\include\stdio.h
+.\objects\adc.o: UART.h
+.\objects\adc.o: ..\STM32F4_DRIVER_LIB\stm32f4xx_gpio.h
+.\objects\adc.o: ..\STM32F4_DRIVER_LIB\stm32f4xx.h
+.\objects\adc.o: C:\Keil_v5\ARM\PACK\ARM\CMSIS\4.5.0\CMSIS\Include\core_cm4.h
+.\objects\adc.o: C:\Keil_v5\ARM\PACK\ARM\CMSIS\4.5.0\CMSIS\Include\core_cmInstr.h
+.\objects\adc.o: C:\Keil_v5\ARM\PACK\ARM\CMSIS\4.5.0\CMSIS\Include\cmsis_armcc.h
+.\objects\adc.o: C:\Keil_v5\ARM\PACK\ARM\CMSIS\4.5.0\CMSIS\Include\core_cmFunc.h
+.\objects\adc.o: C:\Keil_v5\ARM\PACK\ARM\CMSIS\4.5.0\CMSIS\Include\core_cmSimd.h
+.\objects\adc.o: ..\STM32F4_DRIVER_LIB\system_stm32f4xx.h
+.\objects\adc.o: ..\STM32F4_DRIVER_LIB\stm32f4xx_conf.h
+.\objects\adc.o: ..\STM32F4_DRIVER_LIB\stm32f4xx_adc.h
+.\objects\adc.o: ..\STM32F4_DRIVER_LIB\stm32f4xx_tim.h
+.\objects\adc.o: ..\STM32F4_DRIVER_LIB\misc.h
