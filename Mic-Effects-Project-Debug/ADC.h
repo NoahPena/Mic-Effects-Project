@@ -3,8 +3,8 @@
 
 #include "main.h"
 
-void Initialize_ADC(void);
-void EnableTimerInterrupt(void);
-uint16_t readADC1(uint8_t channel);
+void ADC_init(void);
+void ADC_Start(void);
+int32_t ADC_get(void);
 
 #endif

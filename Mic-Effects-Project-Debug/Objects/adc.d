@@ -22,4 +22,3 @@
 .\objects\adc.o: C:\Keil_v5\ARM\ARMCC\Bin\..\include\math.h
 .\objects\adc.o: C:\Keil_v5\ARM\PACK\ARM\CMSIS\4.5.0\CMSIS\Include\arm_const_structs.h
 .\objects\adc.o: C:\Keil_v5\ARM\PACK\ARM\CMSIS\4.5.0\CMSIS\Include\arm_common_tables.h
-.\objects\adc.o: DAC.h

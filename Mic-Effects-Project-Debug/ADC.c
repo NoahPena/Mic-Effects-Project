@@ -1,84 +1,66 @@
 #include "ADC.h"
-#include "DAC.h"
 
-void InitializeTimer()
+void ADC_init(void)
 {
-		TIM_TimeBaseInitTypeDef timer;
+   ADC_InitTypeDef ADC_InitStructure;
+   ADC_CommonInitTypeDef ADC_CommonInitStructure;
+   GPIO_InitTypeDef GPIO_InitStructure;
 	
-		RCC_APB1PeriphClockCmd(RCC_APB1Periph_TIM2, ENABLE);
-	
-		timer.TIM_Prescaler = 0;
-		timer.TIM_CounterMode = TIM_CounterMode_Up;
-		timer.TIM_Period = 500;	//951
-		timer.TIM_ClockDivision = TIM_CKD_DIV1;
-		timer.TIM_RepetitionCounter = 0;
-		TIM_TimeBaseInit(TIM2, &timer);
-		TIM_Cmd(TIM2, ENABLE);
-	
-		TIM_ITConfig(TIM2, TIM_IT_Update, ENABLE);
+		/* Enable peripheral clocks */
+   RCC_AHB1PeriphClockCmd(RCC_AHB1Periph_GPIOC, ENABLE);
+   RCC_APB2PeriphClockCmd(RCC_APB2Periph_ADC1, ENABLE);
+ 
+   /* Configure ADC Channel 10 pin as analog input */
+
+   GPIO_InitStructure.GPIO_Pin = GPIO_Pin_5;
+   GPIO_InitStructure.GPIO_Mode = GPIO_Mode_AN;
+   GPIO_InitStructure.GPIO_PuPd = GPIO_PuPd_NOPULL ;
+   GPIO_Init(GPIOC, &GPIO_InitStructure);
+ 
+   /* ADC Common configuration *************************************************/
+
+   ADC_CommonInitStructure.ADC_Mode = ADC_Mode_Independent;
+   // APB2 clock is half the 168Mhz system clock (i.e. 84Mhz),
+   // so with a div by 8, ADC PCLK would be 10.5Mhz.
+   // F4 datasheet says ADC clock freq should be 0.6Mhz - 30Mhz for Vdda=3.3V
+   ADC_CommonInitStructure.ADC_Prescaler = ADC_Prescaler_Div8;
+   ADC_CommonInitStructure.ADC_DMAAccessMode = ADC_DMAAccessMode_Disabled;
+   //TwoSamplingDelay is only used in dual and triple modes)
+   ADC_CommonInitStructure.ADC_TwoSamplingDelay = ADC_TwoSamplingDelay_5Cycles;   
+   ADC_CommonInit(&ADC_CommonInitStructure);
+ 
+   /* ADC1 regular channel 10 to 15 configuration ************************************/
+
+   ADC_InitStructure.ADC_Resolution = ADC_Resolution_12b;
+   ADC_InitStructure.ADC_ScanConvMode = DISABLE; // 1 Channel
+   ADC_InitStructure.ADC_ContinuousConvMode = DISABLE; // Conversions Triggered
+   ADC_InitStructure.ADC_ExternalTrigConvEdge = ADC_ExternalTrigConvEdge_None; // Manual
+   ADC_InitStructure.ADC_ExternalTrigConv = ADC_ExternalTrigConv_T2_TRGO;  //Unused for manual?
+   ADC_InitStructure.ADC_DataAlign = ADC_DataAlign_Right;
+   ADC_InitStructure.ADC_NbrOfConversion = 1;
+   ADC_Init(ADC1, &ADC_InitStructure);
+
+   //The sample time is how long the input is sampled before the conversion is done.
+   //Since PCLK is 10.5Mhz, 144 cycles is about 13.7uS and the DAC output rate is
+   //running manually off a 44Khz timer interrupt (22uS), we should be fine
+   //(once conversion starts, it takes about 16 cycles)
+   ADC_RegularChannelConfig(ADC1, ADC_Channel_15, 1, ADC_SampleTime_144Cycles);
+ 
+   /* Enable ADC1 */
+   ADC_Cmd(ADC1, ENABLE);
+
+   ADC_Start();
 }
 
-void EnableTimerInterrupt()
-{
-    NVIC_InitTypeDef nvicStructure;
-    nvicStructure.NVIC_IRQChannel = TIM2_IRQn;
-    nvicStructure.NVIC_IRQChannelPreemptionPriority = 0;
-    nvicStructure.NVIC_IRQChannelSubPriority = 1;
-    nvicStructure.NVIC_IRQChannelCmd = ENABLE;
-    NVIC_Init(&nvicStructure);
-}
-
-void Initialize_ADC(void)
-{
-		ADC_InitTypeDef ADC_InitStruct;
-		GPIO_InitTypeDef GPIO_InitStruct;
-	
-		RCC_APB2PeriphClockCmd(RCC_APB2Periph_ADC1, ENABLE);
-		RCC_AHB1PeriphClockCmd(RCC_AHB1ENR_GPIOCEN, ENABLE);
-	
-		GPIO_StructInit(&GPIO_InitStruct);
-		GPIO_InitStruct.GPIO_Pin = 0x01;
-		GPIO_InitStruct.GPIO_Mode = GPIO_Mode_AN;
-		GPIO_InitStruct.GPIO_PuPd = GPIO_PuPd_NOPULL;
-		GPIO_Init(GPIOC, &GPIO_InitStruct);
-	
-		ADC_DeInit();
-		ADC_InitStruct.ADC_DataAlign = ADC_DataAlign_Right;
-		ADC_InitStruct.ADC_Resolution = ADC_Resolution_12b;
-		ADC_InitStruct.ADC_ContinuousConvMode = ENABLE;
-		ADC_InitStruct.ADC_ExternalTrigConv = ADC_ExternalTrigConv_T1_CC1;
-		ADC_InitStruct.ADC_ExternalTrigConvEdge = ADC_ExternalTrigConvEdge_None;
-		ADC_InitStruct.ADC_NbrOfConversion = 1;
-		ADC_InitStruct.ADC_ScanConvMode = DISABLE;
-		ADC_Init(ADC1, &ADC_InitStruct);
-		
-		ADC_Cmd(ADC1, ENABLE);
-		
-		ADC_RegularChannelConfig(ADC1, ADC_Channel_10, 1, ADC_SampleTime_144Cycles);
-		
-		
-		InitializeTimer();		
-}
-
-uint16_t readADC1(uint8_t channel)
+void ADC_Start(void)
 {
 		ADC_SoftwareStartConv(ADC1);
-		while(!ADC_GetFlagStatus(ADC1, ADC_FLAG_EOC));
-		return ADC_GetConversionValue(ADC1);
 }
 
-void TIM2_IRQHandler()
+int32_t ADC_get(void)
 {
-		uint16_t data;
-	
-		if(TIM_GetITStatus(TIM2, TIM_IT_Update) != RESET)
-		{
-				TIM_ClearITPendingBit(TIM2, TIM_IT_Update);
-			
-				//data = (readADC1(10) - 2047.5)/(2047.5);
-				data = readADC1(10);
-				DAC_SetChannel1Data(DAC_Align_12b_R, data);
-				GPIOD->ODR ^= 0x8000;
-
-		}
+		while(ADC_GetSoftwareStartConvStatus(ADC1) != RESET);
+		
+		return (ADC_GetSoftwareStartConvStatus(ADC1) == RESET) ? ADC_GetConversionValue(ADC1) : -1;
 }
+

@@ -23,3 +23,4 @@
 .\objects\main.o: C:\Keil_v5\ARM\PACK\ARM\CMSIS\4.5.0\CMSIS\Include\arm_common_tables.h
 .\objects\main.o: ADC.h
 .\objects\main.o: DAC.h
+.\objects\main.o: TIMER.h
