@@ -1,5 +1,5 @@
 Dependencies for Project 'Mic-Effects-Project-Debug', Target 'Target 1': (DO NOT MODIFY !)
-F (.\main.c)(0x56BC3664)(-c --cpu Cortex-M4.fp -D__EVAL -g -O0 --apcs=interwork --split_sections -I..\STM32F4_DRIVER_LIB-I "D:\Users\Noah Pena\Desktop\Mic-Effects-Project\Mic-Effects-Project-Debug\RTE"-I C:\Keil_v5\ARM\PACK\ARM\CMSIS\4.5.0\CMSIS\Include-I C:\Keil_v5\ARM\PACK\Keil\STM32F4xx_DFP\2.7.0\Drivers\CMSIS\Device\ST\STM32F4xx\Include-D__UVISION_VERSION="517" -D_RTE_ -DSTM32F407xx -DUSE_STDPERIPH_DRIVER -DARM_MATH_CM4-o .\objects\main.o --omf_browse .\objects\main.crf --depend .\objects\main.d)
+F (.\main.c)(0x56C2809B)(-c --cpu Cortex-M4.fp -D__EVAL -g -O0 --apcs=interwork --split_sections -I..\STM32F4_DRIVER_LIB-I "D:\Users\Noah Pena\Desktop\Mic-Effects-Project\Mic-Effects-Project-Debug\RTE"-I C:\Keil_v5\ARM\PACK\ARM\CMSIS\4.5.0\CMSIS\Include-I C:\Keil_v5\ARM\PACK\Keil\STM32F4xx_DFP\2.7.0\Drivers\CMSIS\Device\ST\STM32F4xx\Include-D__UVISION_VERSION="517" -D_RTE_ -DSTM32F407xx -DUSE_STDPERIPH_DRIVER -DARM_MATH_CM4-o .\objects\main.o --omf_browse .\objects\main.crf --depend .\objects\main.d)
 I (main.h)(0x56B7EB8F)
 I (..\STM32F4_DRIVER_LIB\stm32f4xx_rcc.h)(0x56B79E78)
 I (..\STM32F4_DRIVER_LIB\stm32f4xx.h)(0x56B79E78)
@@ -22,7 +22,7 @@ I (C:\Keil_v5\ARM\ARMCC\include\math.h)(0x55DBE24E)
 I (C:\Keil_v5\ARM\PACK\ARM\CMSIS\4.5.0\CMSIS\Include\arm_const_structs.h)(0x550C3758)
 I (C:\Keil_v5\ARM\PACK\ARM\CMSIS\4.5.0\CMSIS\Include\arm_common_tables.h)(0x56255574)
 I (ADC.h)(0x56BBFB91)
-I (DAC.h)(0x56BC2780)
+I (DAC.h)(0x56C277CD)
 I (TIMER.h)(0x56BC1648)
 F (.\ADC.c)(0x56BC180F)(-c --cpu Cortex-M4.fp -D__EVAL -g -O0 --apcs=interwork --split_sections -I..\STM32F4_DRIVER_LIB-I "D:\Users\Noah Pena\Desktop\Mic-Effects-Project\Mic-Effects-Project-Debug\RTE"-I C:\Keil_v5\ARM\PACK\ARM\CMSIS\4.5.0\CMSIS\Include-I C:\Keil_v5\ARM\PACK\Keil\STM32F4xx_DFP\2.7.0\Drivers\CMSIS\Device\ST\STM32F4xx\Include-D__UVISION_VERSION="517" -D_RTE_ -DSTM32F407xx -DUSE_STDPERIPH_DRIVER -DARM_MATH_CM4-o .\objects\adc.o --omf_browse .\objects\adc.crf --depend .\objects\adc.d)
 I (ADC.h)(0x56BBFB91)
@@ -48,7 +48,7 @@ I (C:\Keil_v5\ARM\ARMCC\include\math.h)(0x55DBE24E)
 I (C:\Keil_v5\ARM\PACK\ARM\CMSIS\4.5.0\CMSIS\Include\arm_const_structs.h)(0x550C3758)
 I (C:\Keil_v5\ARM\PACK\ARM\CMSIS\4.5.0\CMSIS\Include\arm_common_tables.h)(0x56255574)
 F (.\DAC.c)(0x56BC17C7)(-c --cpu Cortex-M4.fp -D__EVAL -g -O0 --apcs=interwork --split_sections -I..\STM32F4_DRIVER_LIB-I "D:\Users\Noah Pena\Desktop\Mic-Effects-Project\Mic-Effects-Project-Debug\RTE"-I C:\Keil_v5\ARM\PACK\ARM\CMSIS\4.5.0\CMSIS\Include-I C:\Keil_v5\ARM\PACK\Keil\STM32F4xx_DFP\2.7.0\Drivers\CMSIS\Device\ST\STM32F4xx\Include-D__UVISION_VERSION="517" -D_RTE_ -DSTM32F407xx -DUSE_STDPERIPH_DRIVER -DARM_MATH_CM4-o .\objects\dac.o --omf_browse .\objects\dac.crf --depend .\objects\dac.d)
-I (DAC.h)(0x56BC2780)
+I (DAC.h)(0x56C277CD)
 I (main.h)(0x56B7EB8F)
 I (..\STM32F4_DRIVER_LIB\stm32f4xx_rcc.h)(0x56B79E78)
 I (..\STM32F4_DRIVER_LIB\stm32f4xx.h)(0x56B79E78)

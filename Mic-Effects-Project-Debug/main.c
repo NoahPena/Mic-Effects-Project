@@ -99,7 +99,10 @@ void TIM6_DAC_IRQHandler(void)
 				n = ADC_get();
 				ADC_Start();
 			
-				DAC2_set((uint16_t)(DAC_MID + (int)filter(n)));
+				//DAC2_set((uint16_t)(filter(n)));
+				//DAC2_set((uint16_t)n);
+				DAC2_set((uint16_t)(DAC_MID + n));
+				//DAC2_set((uint16_t)(DAC_MID + (int)filter(n)));
 			
 				TIM_ClearITPendingBit(TIM6, TIM_IT_Update);
 		}
