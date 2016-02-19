@@ -1,0 +1,8 @@
+Mic-Effects-Project Potential Parts List:
+
+LED Matrix PCB Driver:https://www.adafruit.com/products/1616
+
+LED Matrix Pad
+https://www.adafruit.com/product/1611
+
+TLV2462
